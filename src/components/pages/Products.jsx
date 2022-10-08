@@ -121,10 +121,10 @@ export default function Products() {
 
   return (
     <div>
-      <div className="container my-5 py-5">
+      <div className="container mt-5 pt-5">
         <div className="row">
           <div className="col-12 mb-5">
-            <h1 className="display-6 fw-bolder text-center py-5">
+            <h1 className="display-6 fw-bolder text-center py-3">
               Latest Products
             </h1>
             <hr />

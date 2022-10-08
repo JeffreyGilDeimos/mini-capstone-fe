@@ -187,3 +187,14 @@ p {
   }
 }
 
+/* <!-- ----Admin ---- --> */
+.admin {
+  text-align: center;
+  padding-top: 120px !important;
+  padding-left: 100px !important;
+  padding-right: 100px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

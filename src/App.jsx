@@ -9,6 +9,7 @@ import ContactUs from "./components/pages/ContactUs";
 import Login from "./components/pages/authentication/Login";
 import Signup from "./components/pages/authentication/Signup";
 import Cart from "./components/pages/Cart";
+import Admin from "./components/pages/Admin";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
