@@ -7,10 +7,13 @@ import { useDropzone } from "react-dropzone";
 
 export default function AdminBlogs() {
   const [blogName, setBlogName] = useState("");
-  const [author, setAuthor] = useState("");
+  const [blogAuthor, setBlogAuthor] = useState("");
   const [description, setDescription] = useState("");
   const blogList = useSelector((state) => state.blogList);
-  const { getAllBlogs } = bindActionCreators(actionBlog, useDispatch());
+  const { getAllBlogs, addBlog, deleteBlog } = bindActionCreators(
+    actionBlog,
+    useDispatch()
+  );
 
   // Validation
   const [invalidBlogName, setInvalidBlogName] = useState(false);
@@ -24,7 +27,14 @@ export default function AdminBlogs() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    checkIfValid();
+    if (checkIfValid()) {
+      const requestBody = {
+        blogName: blogName,
+        blogAuthor: blogAuthor,
+        description: description,
+      };
+      addBlog(requestBody);
+    }
   };
 
   const checkIfValid = () => {
@@ -39,7 +49,7 @@ export default function AdminBlogs() {
     }
 
     // Check if author is valid
-    if (author.match("^$|^.*@.*..*$")) {
+    if (blogAuthor.match("^$|^.*@.*..*$")) {
       setInvalidAuthor(true);
       isValid = false;
     } else {
@@ -71,22 +81,18 @@ export default function AdminBlogs() {
 
     //Return statement
     return (
-      <div className="col-md-12 col-lg-4 card border-0 my-3" key={blog.blogId}>
+      <div className="card h-100 text-center p-4">
         <img
           src={blog.imageLink ? blog.imageLink : "/images/empty-img.png"}
           alt={blog.blogName}
           {...getRootProps()}
         />
-        <div className="card-body px-0">
-          <h4 className="card-title">{blog.blogName}</h4>
-          <p className="card-text mt-3 text-muted">{blog.description}</p>
-          <p className="card-text">
-            <small className="text-muted">Author: </small>
-            {blog.author}
-          </p>
-          <button to="/products" className="btn">
-            DELETE
-          </button>
+        <div className="card-body">
+          <h5 className="card-title mb-0">
+            {blog?.blogAuthor.substring(0, 12)}...
+          </h5>
+          <p className="card-text lead fw-bold">{blog.blogName}</p>
+          <button onClick={() => deleteBlog(blog.blogId)}>DELETE</button>
         </div>
       </div>
     );
@@ -134,8 +140,8 @@ export default function AdminBlogs() {
             type="text"
             size="sm"
             placeholder="Enter Author Name"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            value={blogAuthor}
+            onChange={(e) => setBlogAuthor(e.target.value)}
             isInvalid={invalidAuthor}
           ></Form.Control>
           <Form.Control.Feedback type="invalid">
@@ -167,7 +173,7 @@ export default function AdminBlogs() {
         </div>
       </Form>
       <hr />
-      <h4 className="text-danger">Blogs</h4>
+      <h4 className="text-danger">BLOGS</h4>
       <div className="row justify-content-center">{renderBlogs()}</div>
     </>
   );
